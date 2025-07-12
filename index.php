@@ -2,11 +2,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>サンプル</title>
+<style>
+    .photo-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #f9f9f9;
+    }
+    
+    .photo-box:hover {
+        background-color: #e9e9e9;
+    }
+    
+    img {
+        max-width: 200px;
+        max-height: 150px;
+    }
+</style>
 </head>
 <body>
-<?php
-print "<h1> 最終課題 作者 羅敬越(A24I436)</h1>\n";
-?>
+<h1> 最終課題 作者 羅敬越(A24I436)</h1>
 
 <?php 
 $dbs = 'mysql:dbname=photo;host=localhost';
@@ -18,10 +33,19 @@ $query = "SELECT * FROM photo";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-	
-    print "<img src='{$row['photo']}'><br>";
+    ?>
+    <div class="photo-box">
+
+        <h3><?php echo $row['title']; ?></h3>
+        
+        <p>地点: <?php echo $row['location']; ?></p>
+        <img src="<?php echo $row['photo']; ?>">
+        <p><a href="view.php?id=<?php echo $row['id']; ?>">查看详情</a></p>
+    </div>
+    <?php
 }
 ?>
-<a href="upload.php">写真登録</a><br><br>
+<br>
+<a href="upload.php">写真登録</a>
 </body>
 </html>
