@@ -23,8 +23,9 @@
 <body>
 <h1> 最終課題 作者 羅敬越(A24I436)</h1>
 
-<?php 
 <a href="index.php">返回首页</a>
+<?php 
+
 $id = $_GET['id'];
 
 $dbs = 'mysql:dbname=photo;host=localhost';
