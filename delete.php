@@ -8,14 +8,14 @@
     padding: 10px;
     margin: 10px 0;
     background-color: #f9f9f9;
-    max-width: 90%;  /* 最大宽度为屏幕的90% */
+    max-width: 90%;  
 }
 
-/* 小屏幕时 */
+
 @media screen and (max-width: 600px) {
     .photo-box {
-        padding: 5px;      /* 更小的内边距 */
-        margin: 5px 0;     /* 更小的外边距 */
+        padding: 5px;      
+        margin: 5px 0;    
     }
 }
 </style>
@@ -23,31 +23,32 @@
 <body>
 <h1> 最終課題 作者 羅敬越(A24I436)</h1>
 
-<a href="index.php">返回首页</a>
+<a href="index.php">ホームページ</a>
 <?php 
-
+//get id from url
 $id = $_GET['id'];
-
+//connect to database
 $dbs = 'mysql:dbname=photo;host=localhost';
 $user = 'root';
 $password="";
 $pdo = new PDO($dbs, $user, $password);
-
+//get photo from database
 $query = "SELECT * FROM photo WHERE id = ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$id]);
 $photo = $stmt->fetch(PDO::FETCH_ASSOC);
-
+//delete photo ready
 unlink($photo['photo']);
-
+//delete photo from database
 $query =" DELETE FROM photo WHERE id = ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$id]);
+//go to index page
 header("Location: index.php");
 exit();
 
 ?>
 <br>
-<a href="index.php">返回首页</a>
+<a href="index.php">ホームページ</a>
 </body>
 </html>

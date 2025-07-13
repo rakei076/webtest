@@ -23,25 +23,30 @@
 <body>
 <h1> 最終課題 作者 羅敬越(A24I436)</h1>
 
-<a href="index.php">返回首页</a>
+<a href="index.php">ホームページ</a>
 <?php 
-
+//get id from url
 $id = $_GET['id'];
-
+//connect to database
 $dbs = 'mysql:dbname=photo;host=localhost';
 $user = 'root';
 $password="";
 $pdo = new PDO($dbs, $user, $password);
-
+//get id photo from database
 $query = "SELECT * FROM photo WHERE id = ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$id]);
 $photo = $stmt->fetch(PDO::FETCH_ASSOC);
-    ?>
+//display data
+?>
     <div class="photo-box">
+        <!--display title-->
         <h3><?php echo $photo['title']; ?></h3>
+        <!--display location-->
         <p>地点: <?php echo $photo['location']; ?></p>
+        <!--display image-->
         <img src="<?php echo $photo['photo']; ?>">
+        <!--display description-->
         <p>説明: <?php echo $photo['description']; ?></p>
     </div>
     <?php

@@ -35,46 +35,56 @@
     <a href="index.php">首页</a>
 
     <?php
+    //check if post is empty
     if($_POST){
-        // 调试代码 - 临时添加
-        echo "POST数据：";
+        //debug code
+        echo "POST data:";
         var_dump($_POST);
-        echo "FILES数据：";
+        echo "FILES data:";
         var_dump($_FILES);
-        echo "文件错误代码：" . $_FILES['photo']['error'];
+        echo "file error code: " . $_FILES['photo']['error'];
         
-        // 你的原代码...
+        //your original code...
     }
+//if post is not empty
 if($_POST){
+    //get photo name
     $photo = $_FILES['photo']['name'];
+    //get title
     $title = $_POST['title'];
+    //get location
     $location = $_POST['location'];
+    //get description
     $description = $_POST['description'];
+    //get upload path
     $upload_path = "uploads/" . $photo;
     move_uploaded_file($_FILES['photo']['tmp_name'],$upload_path);
 
-
+    //connect to database
     $dbs = 'mysql:dbname=photo;host=localhost';
     $user = 'root';
     $password="";
     $pdo = new PDO($dbs, $user, $password);
-
+    //insert data into database
 
 
     $query = "INSERT INTO photo(filename,photo,title,location,description)VALUES(?,?,?,?,?)";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$photo,$upload_path,$title,$location,$description]);
-    
+    //send message for success
     echo "<p>アップロード成功</p>";
     echo "<a href='index.php'>写真一覧へ</a>";
 }else{
-?>
+?>  <!--if post is empty, show form-->
     <form method="POST" enctype="multipart/form-data">
         <p>写真を選んでください<input type="file" name="photo"></p>
-
+        <!--title-->
         <p>タイトル<input type="text" name="title"></p>
+        <!--location-->
         <p>地点<input type="text" name="location"></p>
+        <!--description-->
         <p>説明<textarea name="description" ></textarea></p>
+        <!--submit button-->
         <p><input type="submit" value="登録"></p>
     </form>
 <?php } ?>
