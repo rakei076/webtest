@@ -25,19 +25,25 @@
 
 <a href="index.php">ホームページ</a>
 <?php 
-//get id from url
-$id = $_GET['id'];
-//connect to database
-$dbs = 'mysql:dbname=photo;host=localhost';
-$user = 'root';
-$password="";
-$pdo = new PDO($dbs, $user, $password);
-//get id photo from database
-$query = "SELECT * FROM photo WHERE id = ?";
-$stmt = $pdo->prepare($query);
-$stmt->execute([$id]);
-$photo = $stmt->fetch(PDO::FETCH_ASSOC);
-//display data
+function get_data(){
+    //get id from url
+    $id = $_GET['id'];
+    //connect to database
+    $dbs = 'mysql:dbname=photo;host=localhost';
+    $user = 'root';
+    $password="";
+    $pdo = new PDO($dbs, $user, $password);
+    //get id photo from database
+    $query = "SELECT * FROM photo WHERE id = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$id]);
+    $photo = $stmt->fetch(PDO::FETCH_ASSOC);
+    //返回数据
+    return $photo;
+}
+
+// 调用函数获取数据
+$photo = get_data();
 ?>
     <div class="photo-box">
         <!--display title-->
@@ -50,6 +56,8 @@ $photo = $stmt->fetch(PDO::FETCH_ASSOC);
         <p>説明: <?php echo $photo['description']; ?></p>
     </div>
     <?php
+
+get_data();
 
 ?>
 <br>
