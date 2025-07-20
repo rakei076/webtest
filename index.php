@@ -28,7 +28,7 @@
 <p>最終課題 作者 羅敬越(A24I436)</p>
 
 <?php 
-// 修复后的函数版本
+
 function get_data(){
     //connect to database
     $dbs = 'mysql:dbname=photo;host=localhost';

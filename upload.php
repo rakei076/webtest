@@ -36,16 +36,6 @@
 
     <?php
     //check if post is empty
-    if($_POST){
-        //debug code
-        echo "POST data:";
-        var_dump($_POST);
-        echo "FILES data:";
-        var_dump($_FILES);
-        echo "file error code: " . $_FILES['photo']['error'];
-        
-        //your original code...
-    }
 //if post is not empty
 if($_POST){
     //get photo name

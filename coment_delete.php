@@ -25,7 +25,7 @@
 
 <a href="index.php">ホームページ</a>
 <?php 
-function get_data(){
+function delete_comment(){
 //get id from url
 $id = $_GET['id'];
 //connect to database
@@ -34,21 +34,21 @@ $user = 'root';
 $password="";
 $pdo = new PDO($dbs, $user, $password);
 //get photo from database
-$query = "SELECT * FROM photo WHERE id = ?";
+$query = "SELECT * FROM comments WHERE id = ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$id]);
 $photo = $stmt->fetch(PDO::FETCH_ASSOC);
 //delete photo ready
-unlink($photo['photo']);
+
 //delete photo from database
-$query =" DELETE FROM photo WHERE id = ?";
+$query =" DELETE FROM comments WHERE id = ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute([$id]);
 //go to index page
 header("Location: index.php");
 exit();
 }
-get_data();
+delete_comment();
 ?>
 <br>
 <a href="index.php">ホームページ</a>
